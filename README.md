@@ -1,15 +1,23 @@
 # Web Scraping Tutors
 ### Esta aplicação realiza o scraping na página web, realiza o login com o usuário e dispara email para os alunos 
 
-![Web Scraping]("./public/images/logo-tutors.png")
+![Web Scraping]("public/images/logo-tutors.png")
 
 
+### Up Ambiente
 
 ```
-    docker-compose up -d
+ docker-compose up -d
+```
+### Instal NPM
+```
     npm instal
+```
+### Start a application
+
+```
     npm start
 
-´´´
-Devemos instalar o pacote [NODEJS](https://nodejs.org/pt-br/) para poder
-usar o a aplicação
+```
+
+Developer by @CleitonCorrea
