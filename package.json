@@ -13,6 +13,7 @@
         "http-errors": "~1.6.3",
         "morgan": "~1.9.1",
         "nodemon": "^2.0.16",
-        "puppeteer": "^13.7.0"
+        "puppeteer": "^13.7.0",
+        "puppeteer-email": "^0.1.0"
     }
 }

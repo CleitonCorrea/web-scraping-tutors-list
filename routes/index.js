@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 
 const browserObject = require("../browser.js");
-const scraperController = require("../controllers/pageController");
+const scraperController = require("../controllers/scrapController");
 
 /* GET home page. */
 router.get("/", function(req, res, next) {
