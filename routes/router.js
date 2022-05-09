@@ -6,7 +6,6 @@ const dispacthScrapingPage = false;
 const browserObject = require("../browser.js");
 const scraperController = require("../controllers/scrapController");
 const scraperControllerLogin = require("../controllers/scrapControllerLogin");
-const user = require("../model/user");
 
 /* GET page login. */
 router.get("/", function(req, res, next) {
@@ -14,22 +13,28 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/login", function(req, res, next) {
-    user.email = req.body.email;
-    let password = req.body.password;
+    let email = req.body.email !== "" ? req.body.email : false;
+    let password = req.body.password !== "" ? req.body.password : false;
     let valor = req.body.valor;
     let msg = req.body.msg;
-    // let user = User(email, password, valor, msg);
+    let checkLogin = true;
 
-    console.log(user.email);
+    console.log(`O usuário ${email} está logando...`);
 
     //Criando uma instancia do browser
     let browserInstance = browserObject.startBrowser();
 
     //Instância a tela de login a primeira vez
-    scraperControllerLogin(browserInstance);
+    scraperControllerLogin(browserInstance, email, password, valor, msg);
 
-    //Verificar Status da página
-    // scraperController(browserInstance);
+    //Aguardando 5 minutos para executar novamente
+    if (checkLogin) {
+        console.log("Aguardando 5 minutos...");
+        setTimeout(function() {
+            console.log("O script esta sendo executado novamente...");
+            scraperControllerLogin(browserInstance, email, password, valor, msg);
+        }, 5 * 60 * 1000);
+    }
 });
 
 module.exports = router;

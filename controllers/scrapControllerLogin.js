@@ -1,15 +1,20 @@
 const pageScraperLogin = require("../services/pageScraperLogin");
 const fs = require("fs");
 
-async function scrapeAll(browserInstance) {
+async function scrapeAll(browserInstance, email, password, valor, mensagem) {
     let browser;
     try {
         browser = await browserInstance;
         let scrapedData = {};
         // Call the scraper for different set of books to be scraped
-        scrapedData["log"] = await pageScraperLogin.scraper(browser, "input#name");
+        scrapedData["log"] = await pageScraperLogin.scraper(
+            browser,
+            "input#name",
+            email,
+            password
+        );
 
-        await browser.close();
+        // await browser.close();
 
         //Salva logs de login
         fs.writeFile(
@@ -20,13 +25,11 @@ async function scrapeAll(browserInstance) {
                 if (err) {
                     return console.log(err);
                 }
-                console.log(
-                    "The data has been scraped and saved successfully! View it at './data.json'"
-                );
+                console.log("O scraping foi executando com sucesso!");
             }
         );
     } catch (err) {
-        console.log("Could not resolve the browser instance => ", err);
+        console.log("Erro ao instênciar o navegador => ", err);
     }
 }
 

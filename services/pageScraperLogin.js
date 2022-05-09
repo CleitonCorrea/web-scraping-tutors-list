@@ -1,6 +1,5 @@
 const scraperObjectLogin = {
-    url: "https://www.tutors.com/login",
-    async scraper(browser) {
+    async scraper(browser, email, pass) {
         let page = await browser.newPage();
         console.log(`Navigating to ${this.url}...`);
 
@@ -18,8 +17,20 @@ const scraperObjectLogin = {
         // ACESSAR essa pagina
         await page.goto("https://tutors.com/pros/requests");
 
-        // Like nessa coisa
-        await page.click('[title="Like photo"]');
+        // <a href="/pros/quote/N1UITiGb8n/4k9q_zZIn" class="btn-viewlead">View Details</a>
+
+        await page.waitForSelector("article");
+        // Get the link to all the required books
+        let urls = await page.$$eval("a", (links) => {
+            // Make sure the book to be scraped is in stock
+            links = links.filter((link) => link.querySelector(".request-head"));
+            console.log("verificando link" + links);
+            // Extract the links from the data
+            links = links.map((el) => el.querySelector("a").href);
+            return links;
+        });
+
+        console.log(urls);
     },
 };
 
