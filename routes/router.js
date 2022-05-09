@@ -36,7 +36,7 @@ router.post("/login", function(req, res, next) {
         console.log("O script esta sendo executado novamente...");
         console.log("Checando se a atividades a serem avaliadas...");
 
-        let checkScraping = checkJobsScraping.scraper(browserInstance);
+        let checkScraping = checkJobsScraping.scraper();
 
         if (checkScraping) {
             scraperControllerLogin(browserInstance);
