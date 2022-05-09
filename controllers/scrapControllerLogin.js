@@ -1,4 +1,4 @@
-const pageScraper = require("../services/pageScraper");
+const pageScraperLogin = require("../services/pageScraperLogin");
 const fs = require("fs");
 
 async function scrapeAll(browserInstance) {
@@ -7,12 +7,11 @@ async function scrapeAll(browserInstance) {
         browser = await browserInstance;
         let scrapedData = {};
         // Call the scraper for different set of books to be scraped
-        scrapedData["articles"] = await pageScraper.scraper(
-            browser,
-            "article#input"
-        );
+        scrapedData["log"] = await pageScraperLogin.scraper(browser, "input#name");
 
         await browser.close();
+
+        //Salva logs de login
         fs.writeFile(
             "data.json",
             JSON.stringify(scrapedData),
