@@ -2,8 +2,9 @@ require("dotenv/config");
 const scraperObjectLogin = {
     async scraper(browser) {
         let page = await browser.newPage();
+        let link = [];
 
-        console.log(`Navigating to ${process.env.URL_LOGIN}...`);
+        console.log(`Acessando a URL: ${process.env.URL_LOGIN}...`);
 
         await page.goto(process.env.URL_LOGIN);
 
@@ -13,26 +14,27 @@ const scraperObjectLogin = {
         await page.click('[type="submit"]');
         await page.waitForNavigation();
 
-        // ACESSAR essa pagina
+        //Acessa essa pagina de jobs
         await page.goto(process.env.URL_PROS);
 
-        // <a href="/pros/quote/N1UITiGb8n/4k9q_zZIn" class="btn-viewlead">View Details</a>
+        let btnSearch = await page.waitForXPath(
+            '//*[@id="6278f7e455a8236d70f7c68d"]/div/a', { visible: true }
+        );
+        btnSearch.click();
 
-        //Verifica os links de Jobs Ativos
-        await page.waitForSelector("div.request-cta");
-        // Get the link to all the required books
-        let urls = await page.$$eval("a.btn-viewlead", (links) => {
-            console.log("verificando jobs...");
+        await page.waitForNavigation(".quote-panel thin");
 
-            // Make sure the book to be scraped is in stock
-            links = links.filter((link) => link.querySelector(".request-head"));
-            console.log("verificando link" + links);
-            // Extract the links from the data
-            links = links.map((el) => el.querySelector("a").href);
-            return links;
-        });
+        //x-patc text ares = //*[@id="quote-message"]
+        //x-patch botao = //*[@id="send-quote"]
+        //x-pacth input = //*[@id="quote-price"]
+        await page.type("#quote-price", process.env.VALOR);
+        await page.type("#quote-message", process.env.MSG);
+        await page.click("#send-quote");
+        await page.waitForNavigation();
 
-        console.log(urls);
+        //O Ciclo se Inicia Novamente, pois aqui é a tela de checkout
+
+        console.log(`Enviando email para o aluno: ${process.env.EMAIL}`);
     },
 };
 
