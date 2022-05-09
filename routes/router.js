@@ -1,40 +1,35 @@
 var express = require("express");
-var router = express.Router();
 
+const router = express.Router();
+const alertCronDispatch = [];
+const dispacthScrapingPage = false;
 const browserObject = require("../browser.js");
 const scraperController = require("../controllers/scrapController");
-const dispacthScrapingPage;
-const alertCronDispatch = [];
+const scraperControllerLogin = require("../controllers/scrapControllerLogin");
+const user = require("../model/user");
 
-/* GET home page. */
+/* GET page login. */
 router.get("/", function(req, res, next) {
-    res.render("index", { title: "Express" });
+    res.render("index", { title: "Scraping Page Tutors" });
 });
 
 router.post("/login", function(req, res, next) {
-
-    let email = req.body.name;
+    user.email = req.body.email;
     let password = req.body.password;
     let valor = req.body.valor;
     let msg = req.body.msg;
-    //Start the browser and create a browser instance
-    let browserInstance = browserObject.startBrowser();
-    // Pass the browser instance to the scraper controller
-    for (let i = 0; i <= 60; i = i + 5) {
-        alertCronDispatch.push(
-            new Cron.Job(i + " * * * *", function() {
-                dispacthScrapingPage = true;
-            })
-        );
-    }
+    // let user = User(email, password, valor, msg);
 
-    if (dispacthScrapingPage) {
-        //executa a varredura na página
-        scraperController(browserInstance);
-    }
+    console.log(user.email);
+
+    //Criando uma instancia do browser
+    let browserInstance = browserObject.startBrowser();
+
+    //Instância a tela de login a primeira vez
+    scraperControllerLogin(browserInstance);
 
     //Verificar Status da página
-    scraperController(browserInstance);
+    // scraperController(browserInstance);
 });
 
 module.exports = router;
