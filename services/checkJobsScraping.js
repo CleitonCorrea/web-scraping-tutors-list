@@ -1,6 +1,11 @@
 require("dotenv/config");
 const checkJobsScraping = {
-    async scraper(browser) {
+    async scraper() {
+        let browser = await puppeteer.launch({
+            headless: false,
+            args: ["--disable-setuid-sandbox"],
+            ignoreHTTPSErrors: true,
+        });
         let page = await browser.newPage();
         let link = [];
 
