@@ -7,9 +7,6 @@ const scraperObjectLogin = {
 
         await page.goto(process.env.URL_LOGIN);
 
-        // - Acessa a página de login
-        // await page.click('[href="/login"]');
-
         //Passando os parametros para efetuar o login
         await page.type("input#email", process.env.EMAIL);
         await page.type("input#password", process.env.PASSWORD);
@@ -21,9 +18,12 @@ const scraperObjectLogin = {
 
         // <a href="/pros/quote/N1UITiGb8n/4k9q_zZIn" class="btn-viewlead">View Details</a>
 
-        await page.waitForSelector("article");
+        //Verifica os links de Jobs Ativos
+        await page.waitForSelector("div.request-cta");
         // Get the link to all the required books
-        let urls = await page.$$eval("a", (links) => {
+        let urls = await page.$$eval("a.btn-viewlead", (links) => {
+            console.log("verificando jobs...");
+
             // Make sure the book to be scraped is in stock
             links = links.filter((link) => link.querySelector(".request-head"));
             console.log("verificando link" + links);
