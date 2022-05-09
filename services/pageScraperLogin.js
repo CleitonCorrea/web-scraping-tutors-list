@@ -3,25 +3,23 @@ const scraperObjectLogin = {
     async scraper(browser) {
         let page = await browser.newPage();
         console.log(`Navigating to ${this.url}...`);
-        // Navigate to the selected page
-        await page.goto(this.url);
-        //Verification is logon
-        await page.waitForSelector("input[name=email]");
 
-        await page.type("input[name=name]", "Cleiton@gmail.com");
-        await page.$eval(
-            "input[name=email]",
-            (el) => (el.value = "Cleiton@correa.com")
-        );
+        await page.goto("https://www.tutors.com/login");
 
-        await page.click('input[type="submit"]');
-        await page.waitForSelector("#mw-content-text");
-        // const text = await page.evaluate(() => {
-        //     const anchor = document.querySelector("#mw-content-text");
-        //     return anchor.textContent;
-        // });
-        console.log(text);
-        await browser.close();
+        // - Acessa a página de login
+        // await page.click('[href="/login"]');
+
+        // Troque os valores de process.env.UNSPLASH_EMAIL e process.env.UNSPLASH_PASS pelo seu login e senha :)
+        await page.type("input#email", "cleitoncorreadesigner@gmail.com");
+        await page.type("input#password", "alfenas123");
+        await page.click('[type="submit"]');
+        await page.waitForNavigation();
+
+        // ACESSAR essa pagina
+        await page.goto("https://tutors.com/pros/requests");
+
+        // Like nessa coisa
+        await page.click('[title="Like photo"]');
     },
 };
 
