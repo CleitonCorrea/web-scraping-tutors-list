@@ -1,4 +1,5 @@
 require("dotenv/config");
+const puppeteer = require("puppeteer");
 const checkJobsScraping = {
     async scraper() {
         let browser = await puppeteer.launch({

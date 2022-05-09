@@ -32,8 +32,7 @@ const scraperObjectLogin = {
         await page.click("#send-quote");
         await page.waitForNavigation();
 
-        //O Ciclo se Inicia Novamente, pois aqui é a tela de checkout
-
+        //O Ciclo se Inicia Novamente, pois aqui é a tela de
         console.log(`Enviando email para o aluno: ${process.env.EMAIL}`);
     },
 };
