@@ -1,18 +1,13 @@
 const pageScraperLogin = require("../services/pageScraperLogin");
 const fs = require("fs");
 
-async function scrapeAll(browserInstance, email, password, valor, mensagem) {
+async function scrapeAll(browserInstance) {
     let browser;
     try {
         browser = await browserInstance;
         let scrapedData = {};
         // Call the scraper for different set of books to be scraped
-        scrapedData["log"] = await pageScraperLogin.scraper(
-            browser,
-            "input#name",
-            email,
-            password
-        );
+        scrapedData["log"] = await pageScraperLogin.scraper(browser, "input#name");
 
         // await browser.close();
 

@@ -1,3 +1,4 @@
+require("dotenv/config");
 var express = require("express");
 
 const router = express.Router();
@@ -13,26 +14,26 @@ router.get("/", function(req, res, next) {
 });
 
 router.post("/login", function(req, res, next) {
-    let email = req.body.email !== "" ? req.body.email : false;
-    let password = req.body.password !== "" ? req.body.password : false;
-    let valor = req.body.valor;
-    let msg = req.body.msg;
+    process.env.EMAIL = req.body.email;
+    process.env.PASSWORD = req.body.password;
+    process.env.VALOR = req.body.valor;
+    process.env.MSG = req.body.msg;
     let checkLogin = true;
 
-    console.log(`O usuário ${email} está logando...`);
+    console.log(`O usuário ${process.env.EMAIL} está logando...`);
 
     //Criando uma instancia do browser
     let browserInstance = browserObject.startBrowser();
 
     //Instância a tela de login a primeira vez
-    scraperControllerLogin(browserInstance, email, password, valor, msg);
+    scraperControllerLogin(browserInstance);
 
     //Aguardando 5 minutos para executar novamente
     if (checkLogin) {
         console.log("Aguardando 5 minutos...");
         setTimeout(function() {
             console.log("O script esta sendo executado novamente...");
-            scraperControllerLogin(browserInstance, email, password, valor, msg);
+            scraperControllerLogin(browserInstance);
         }, 5 * 60 * 1000);
     }
 });

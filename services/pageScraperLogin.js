@@ -1,21 +1,23 @@
+require("dotenv/config");
 const scraperObjectLogin = {
-    async scraper(browser, email, pass) {
+    async scraper(browser) {
         let page = await browser.newPage();
-        console.log(`Navigating to ${this.url}...`);
 
-        await page.goto("https://www.tutors.com/login");
+        console.log(`Navigating to ${process.env.URL_LOGIN}...`);
+
+        await page.goto(process.env.URL_LOGIN);
 
         // - Acessa a página de login
         // await page.click('[href="/login"]');
 
-        // Troque os valores de process.env.UNSPLASH_EMAIL e process.env.UNSPLASH_PASS pelo seu login e senha :)
-        await page.type("input#email", "cleitoncorreadesigner@gmail.com");
-        await page.type("input#password", "alfenas123");
+        //Passando os parametros para efetuar o login
+        await page.type("input#email", process.env.EMAIL);
+        await page.type("input#password", process.env.PASSWORD);
         await page.click('[type="submit"]');
         await page.waitForNavigation();
 
         // ACESSAR essa pagina
-        await page.goto("https://tutors.com/pros/requests");
+        await page.goto(process.env.URL_PROS);
 
         // <a href="/pros/quote/N1UITiGb8n/4k9q_zZIn" class="btn-viewlead">View Details</a>
 
