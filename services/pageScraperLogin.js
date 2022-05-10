@@ -32,6 +32,10 @@ const scraperObjectLogin = {
         await page.click("#send-quote");
         await page.waitForNavigation();
 
+        //Acessa essa pagina de jobs
+        await page.goto(process.env.URL_PROS);
+        browser.close();
+
         //O Ciclo se Inicia Novamente, pois aqui é a tela de
         console.log(`Enviando email para o aluno: ${process.env.EMAIL}`);
     },
